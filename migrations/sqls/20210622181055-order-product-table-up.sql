@@ -1,0 +1,1 @@
+CREATE TABLE order_products (id integer unsigned not null AUTO_INCREMENT, product_id integer, order_id integer, quantity integer, primary key(id), foreign key(product_id) references products.id, foreign key(order_id) references orders.id)

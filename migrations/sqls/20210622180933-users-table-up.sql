@@ -1,0 +1,1 @@
+CREATE TABLE users (id integer unsigned not null AUTO_INCREMENT, firstname varchar(100), lastname varchar(100), password varchar, primary key (id));

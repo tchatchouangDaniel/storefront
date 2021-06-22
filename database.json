@@ -1,0 +1,16 @@
+{
+  "dev": {
+    "driver": "pg",
+    "host": "127.0.0.1",
+    "database": "fantasy",
+    "user": "magical",
+    "password": "magic"
+  },
+  "test": {
+    "driver": "pg",
+    "host": "127.0.0.1",
+    "database": "fantasy_test",
+    "user": "magical",
+    "password": "magic"
+  }
+}
