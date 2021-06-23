@@ -1,6 +1,6 @@
 /* eslint-disable import/no-mutable-exports */
-import dotenv from "dotenv"
-import { Pool } from "pg"
+import dotenv from 'dotenv'
+import { Pool } from 'pg'
 
 dotenv.config()
 let Client: Pool
@@ -14,7 +14,7 @@ const config = {
   password: process.env.POSTGRES_USER_PASSWORD,
 }
 
-if (ENV === "dev") {
+if (ENV === 'dev') {
   Client = new Pool({
     host: config.host,
     database: config.database,

@@ -11,7 +11,8 @@
     "tsc": "tsc",
     "db-migrate": "db-migrate",
     "lint": "eslint src/**/*.ts --fix",
-    "prettier": "prettier --config .prettierrc --write ./src/**/*.ts"
+    "prettier": "prettier --config .prettierrc --write ./src/**/*.ts",
+    "test": "db-migrate --env test up && jasmine-ts && db-migrate db:drop test"
   },
   "author": "Udacity",
   "license": "ISC",
