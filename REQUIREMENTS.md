@@ -56,8 +56,8 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 ## Database tables
 
-1- Users (id integer unsigned not null AUTO_INCREMENT, firstname varchar(100), lastname varchar(100), password varchar, primary key (id))
-3- Products (id integer unsigned not null AUTO_INCREMENT, name varchar, description text, category_id integer, primary key (id), foreign key(category_id) references categories.id)
-4- Orders (id integer unsigned not null AUTO_INCREMENT, user_id integer, status varchar(10), primary key(id), foreign key(user_id) references users.id)
-2- Categories (id integer unsigned not null AUTO_INCREMENT, name varchar(100), primary key(id))
-5- order_products (id integer unsigned not null AUTO_INCREMENT, product_id integer, order_id integer, quantity integer, primary key(id), foreign key(product_id) references products.id, foreign key(order_id) references orders.id)
+1- Users (id serial, firstname varchar(100), lastname varchar(100), password varchar, primary key (id))
+3- Products (id serial, name varchar, description text, category_id integer, primary key (id), foreign key(category_id) references categories.id)
+4- Orders (id serial, user_id integer, status varchar(10), primary key(id), foreign key(user_id) references users.id)
+2- Categories (id serial, name varchar(100), primary key(id))
+5- order_products (id serial, product_id integer, order_id integer, quantity integer, primary key(id), foreign key(product_id) references products.id, foreign key(order_id) references orders.id)

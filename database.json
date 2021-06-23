@@ -1,16 +1,16 @@
 {
   "dev": {
     "driver": "pg",
-    "host": "127.0.0.1",
-    "database": "fantasy",
-    "user": "magical",
-    "password": "magic"
+    "host": "localhost",
+    "database": "storefront",
+    "user": "store_admin",
+    "password": "store"
   },
   "test": {
     "driver": "pg",
-    "host": "127.0.0.1",
-    "database": "fantasy_test",
-    "user": "magical",
-    "password": "magic"
+    "host": "localhost",
+    "database": "storefront_test",
+    "user": "store_admin",
+    "password": "store"
   }
 }

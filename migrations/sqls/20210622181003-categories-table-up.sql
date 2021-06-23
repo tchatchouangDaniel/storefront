@@ -1,1 +1,5 @@
-CREATE TABLE categories (id integer unsigned not null AUTO_INCREMENT, name varchar(100), primary key(id));
+CREATE TABLE categories (
+    id SERIAL, 
+    name varchar(100), 
+    primary key(id)
+);
