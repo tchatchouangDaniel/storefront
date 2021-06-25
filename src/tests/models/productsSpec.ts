@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable no-undef */
 /* eslint-disable import/extensions */
 import { ProductsStore } from '../../models/products'
