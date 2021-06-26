@@ -1,6 +1,7 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
+import { QueryResult } from 'pg'
 import Client from '../database'
 
 export type Product = {
@@ -12,7 +13,7 @@ export type Product = {
 }
 
 export class ProductsStore {
-  // TODO: add update
+  // TODO: add reset Table
   async index(): Promise<Product[]> {
     try {
       const conn = await Client.connect()
@@ -53,6 +54,33 @@ export class ProductsStore {
       return result.rows[0]
     } catch (error) {
       throw new Error(`Unable to create product : ${error}`)
+    }
+  }
+
+  async update(
+    id: string | number,
+    name?: string | null,
+    description?: string | null
+  ): Promise<Product> {
+    try {
+      const conn = await Client.connect()
+      let sql: string
+      let result: QueryResult<any>
+      if (!name && !description) {
+        throw new Error('No parameters passed')
+      }
+      if (name) {
+        sql = 'update products set name=($1) where id=($2) returning *'
+        result = await conn.query(sql, [name, id])
+      }
+      if (description) {
+        sql = 'update products set description=($1) where id=($2) returning *'
+        result = await conn.query(sql, [description, id])
+      }
+      conn.release()
+      return result!.rows[0]
+    } catch (error) {
+      throw new Error(`Unable to update this products : ${error}`)
     }
   }
 

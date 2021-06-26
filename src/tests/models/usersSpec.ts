@@ -31,6 +31,10 @@ describe('user model', () => {
       expect(store.delete).toBeDefined()
     })
 
+    it('should have a login method', () => {
+      expect(store.login).toBeDefined()
+    })
+
     it('should have a resetTable method', () => {
       expect(store.resetTable).toBeDefined()
     })
@@ -38,7 +42,7 @@ describe('user model', () => {
 
   describe('users store methods functionalities', () => {
     it('should create a new user', async () => {
-      const result = await store.create('daniel', 'paul', 'chicken')
+      const result = await store.create('admin', 'daniel', 'paul', 'chicken')
 
       expect(result.firstname).toEqual('daniel')
       expect(result.lastname).toEqual('paul')
@@ -67,6 +71,14 @@ describe('user model', () => {
       ).toBeTrue()
     })
 
+    it('should display the user logged in', async () => {
+      const result = await store.login('admin', 'chicken')
+      expect(result!.username).toEqual('admin')
+      expect(
+        bcrypt.compareSync(`chicken${pepper}`, result!.password)
+      ).toBeTrue()
+    })
+
     it('should update user with id 1 firstname to ouokam', async () => {
       const result = await store.update(1, 'ouokam')
       expect(result.firstname).toEqual('ouokam')
@@ -86,14 +98,14 @@ describe('user model', () => {
     })
 
     it('should update user with id 1 password to 1234', async () => {
-      const result = await store.update(1, null, null, 'chicken', '1234')
+      const result = await store.update(1, null, null, '1234')
       expect(result.firstname).toEqual('ouokam')
       expect(result.lastname).toEqual('claude')
       expect(await bcrypt.compare(`1234${pepper}`, result.password)).toBeTrue()
     })
 
     it('should update user with id 1 daniel paul chicken', async () => {
-      const result = await store.update(1, 'daniel', 'paul', '1234', 'chicken')
+      const result = await store.update(1, 'daniel', 'paul', 'chicken')
       expect(result.firstname).toEqual('daniel')
       expect(result.lastname).toEqual('paul')
       expect(

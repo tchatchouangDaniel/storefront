@@ -1,5 +1,6 @@
 CREATE TABLE order_products (
-    id SERIAL, 
+    id SERIAL,
+    username varchar(100), 
     product_id integer references products ON DELETE CASCADE ON UPDATE CASCADE,
     order_id integer references orders ON DELETE CASCADE ON UPDATE CASCADE, 
     quantity integer, 

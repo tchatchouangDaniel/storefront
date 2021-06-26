@@ -41,6 +41,14 @@ describe('order model', () => {
       expect(store.addToCart).toBeDefined()
     })
 
+    it('should have an update cart method', () => {
+      expect(store.addToCart).toBeDefined()
+    })
+
+    it('should have a remove from cart method', () => {
+      expect(store.addToCart).toBeDefined()
+    })
+
     it('should have a resetTable method', () => {
       expect(store.resetTable).toBeDefined()
     })

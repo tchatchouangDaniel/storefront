@@ -9,7 +9,7 @@ export type Category = {
 }
 
 export class CategoriesStore {
-  // TODO: add update
+  // TODO: add reset
   async index(): Promise<Category[]> {
     try {
       const conn = await Client.connect()
@@ -42,6 +42,18 @@ export class CategoriesStore {
       return result.rows[0]
     } catch (error) {
       throw new Error(`Unable to create category : ${error}`)
+    }
+  }
+
+  async update(id: string | number, name: string): Promise<Category> {
+    try {
+      const conn = await Client.connect()
+      const sql = 'update categories set name=($1) where id=($2) returning *'
+      const result = await conn.query(sql, [name, id])
+      conn.release()
+      return result.rows[0]
+    } catch (error) {
+      throw new Error(`Unable to update category : ${error}`)
     }
   }
 }
