@@ -23,6 +23,10 @@ describe('categories model', () => {
       expect(store.update).toBeDefined()
     })
 
+    it('should have a delete method', () => {
+      expect(store.delete).toBeDefined()
+    })
+
     // TODO: write code for resetTable
     // it('should have a resetTable method', () => {
     //   expect(store.resetTable).toBeDefined()
@@ -61,7 +65,14 @@ describe('categories model', () => {
 
     it('should update category cloth name to clothes', async () => {
       const result = await store.update(1, 'clothes')
+      expect(result).toEqual({
+        id: 1,
+        name: 'clothes',
+      })
+    })
 
+    it('should delete category cloth', async () => {
+      const result = await store.delete(1)
       expect(result).toEqual({
         id: 1,
         name: 'clothes',
