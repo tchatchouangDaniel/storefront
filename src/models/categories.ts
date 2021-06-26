@@ -56,4 +56,16 @@ export class CategoriesStore {
       throw new Error(`Unable to update category : ${error}`)
     }
   }
+
+  async delete(id: string | number): Promise<Category> {
+    try {
+      const conn = await Client.connect()
+      const sql = 'delete from categories where id=($1)'
+      const result = await conn.query(sql, [id])
+      conn.release()
+      return result.rows[0]
+    } catch (error) {
+      throw new Error(`Unable to update : ${error}`)
+    }
+  }
 }

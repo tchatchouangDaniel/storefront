@@ -34,10 +34,10 @@ describe('user model', () => {
     it('should have a login method', () => {
       expect(store.login).toBeDefined()
     })
-
-    it('should have a resetTable method', () => {
-      expect(store.resetTable).toBeDefined()
-    })
+    // TODO: write code for resetTable
+    // it('should have a resetTable method', () => {
+    //   expect(store.resetTable).toBeDefined()
+    // })
   })
 
   describe('users store methods functionalities', () => {

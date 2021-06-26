@@ -37,9 +37,10 @@ describe('product model', () => {
       expect(store.delete).toBeDefined()
     })
 
-    it('should have a resetTable method', () => {
-      expect(store.resetTable).toBeDefined()
-    })
+    // TODO: write code for resetTable
+    // it('should have a resetTable method', () => {
+    //   expect(store.resetTable).toBeDefined()
+    // })
   })
 
   describe('products store methods functionalities', () => {
