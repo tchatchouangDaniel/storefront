@@ -7,9 +7,6 @@ const orders_1 = require("../../models/orders");
 const users_1 = require("../../models/users");
 const store = new orders_1.OrdersStore();
 const userStore = new users_1.UsersStore();
-beforeAll(async () => {
-    await userStore.create('admin', 'daniel', 'paul', 'loveAfrica');
-});
 afterAll(async () => {
     await userStore.delete(1);
     await userStore.resetTable();
@@ -36,10 +33,10 @@ describe('order model', () => {
             expect(store.addToCart).toBeDefined();
         });
         it('should have an update cart method', () => {
-            expect(store.addToCart).toBeDefined();
+            expect(store.updateCart).toBeDefined();
         });
         it('should have a remove from cart method', () => {
-            expect(store.addToCart).toBeDefined();
+            expect(store.RemoveFromCart).toBeDefined();
         });
         it('should have a resetTable method', () => {
             expect(store.resetTable).toBeDefined();
@@ -47,6 +44,7 @@ describe('order model', () => {
     });
     describe('orders store methods functionalities', () => {
         it('should create a new order', async () => {
+            await userStore.create('admin', 'daniel', 'paul', 'loveAfrica');
             const result = await store.create(1, 'active');
             expect(result).toEqual({
                 id: 1,
@@ -81,9 +79,9 @@ describe('order model', () => {
             });
         });
         it('should delete order with id 1', async () => {
+            await userStore.delete(1);
             const result = await store.delete(1);
             expect(result).toEqual({ id: 1, user_id: 1, status: 'complete' });
         });
-        // it('should reset table id order', async () => {})
     });
 });

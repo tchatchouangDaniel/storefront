@@ -28,7 +28,7 @@ export class ProductsStore {
   async show(id: string | number): Promise<Product> {
     try {
       const conn = await Client.connect()
-      const sql = 'select * from products where id=($id)'
+      const sql = 'select * from products where id=($1)'
       const result = await conn.query(sql, [id])
       conn.release()
       return result.rows[0]
@@ -86,12 +86,12 @@ export class ProductsStore {
   async delete(id: string | number): Promise<Product> {
     try {
       const conn = await Client.connect()
-      const sql = 'delete from products where id=($id) returning *'
+      const sql = 'delete from products where id=($1) returning *'
       const result = await conn.query(sql, [id])
       conn.release()
       return result.rows[0]
     } catch (error) {
-      throw new Error(`Unable to delete product`)
+      throw new Error(`Unable to delete product : ${error}`)
     }
   }
 

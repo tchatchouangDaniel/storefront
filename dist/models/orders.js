@@ -37,7 +37,7 @@ class OrdersStore {
     async create(userId, status = 'active') {
         try {
             const conn = await database_1.default.connect();
-            const sql = 'insert into orders(user_id,status) values($1, $2)';
+            const sql = 'insert into orders(user_id,status) values($1, $2) returning *';
             // eslint-disable-next-line camelcase
             const result = await conn.query(sql, [userId, status]);
             conn.release();
@@ -62,7 +62,7 @@ class OrdersStore {
     async delete(id) {
         try {
             const conn = await database_1.default.connect();
-            const sql = 'delete from orders where id=($1)';
+            const sql = 'delete from orders where id=($1) returning *';
             const result = await conn.query(sql, [id]);
             conn.release();
             return result.rows[0];

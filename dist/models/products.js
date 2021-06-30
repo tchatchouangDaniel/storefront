@@ -21,7 +21,7 @@ class ProductsStore {
     async show(id) {
         try {
             const conn = await database_1.default.connect();
-            const sql = 'select * from products where id=($id)';
+            const sql = 'select * from products where id=($1)';
             const result = await conn.query(sql, [id]);
             conn.release();
             return result.rows[0];
@@ -71,13 +71,13 @@ class ProductsStore {
     async delete(id) {
         try {
             const conn = await database_1.default.connect();
-            const sql = 'delete from products where id=($id) returning *';
+            const sql = 'delete from products where id=($1) returning *';
             const result = await conn.query(sql, [id]);
             conn.release();
             return result.rows[0];
         }
         catch (error) {
-            throw new Error(`Unable to delete product`);
+            throw new Error(`Unable to delete product : ${error}`);
         }
     }
     async resetTable() {

@@ -38,7 +38,6 @@ describe('user model', () => {
     it('should have a login method', () => {
       expect(store.login).toBeDefined()
     })
-    // TODO: write code for resetTable
     it('should have a resetTable method', () => {
       expect(store.resetTable).toBeDefined()
     })
@@ -47,7 +46,7 @@ describe('user model', () => {
   describe('users store methods functionalities', () => {
     it('should create a new user', async () => {
       const result = await store.create('admin', 'daniel', 'paul', 'chicken')
-
+      expect(result.username).toEqual('admin')
       expect(result.firstname).toEqual('daniel')
       expect(result.lastname).toEqual('paul')
       expect(bcrypt.compareSync(`chicken${pepper}`, result.password)).toBeTrue()
@@ -55,7 +54,7 @@ describe('user model', () => {
 
     it('should show all the user created', async () => {
       const result = await store.index()
-
+      expect(result[0].username).toEqual('admin')
       expect(result[0].firstname).toEqual('daniel')
       expect(result[0].lastname).toEqual('paul')
       expect(
@@ -65,7 +64,7 @@ describe('user model', () => {
 
     it('should show user with id 1', async () => {
       const result = await store.show(1)
-
+      expect(result.username).toEqual('admin')
       expect(result.firstname).toEqual('daniel')
       expect(result.lastname).toEqual('paul')
       expect(bcrypt.compareSync(`chicken${pepper}`, result.password)).toBeTrue()
