@@ -13,6 +13,8 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await catStore.delete(1)
+  await catStore.resetTable()
+  await store.resetTable()
 })
 
 describe('product model', () => {
@@ -37,10 +39,9 @@ describe('product model', () => {
       expect(store.delete).toBeDefined()
     })
 
-    // TODO: write code for resetTable
-    // it('should have a resetTable method', () => {
-    //   expect(store.resetTable).toBeDefined()
-    // })
+    it('should have a resetTable method', () => {
+      expect(store.resetTable).toBeDefined()
+    })
   })
 
   describe('products store methods functionalities', () => {
@@ -130,7 +131,5 @@ describe('product model', () => {
         category_id: 1,
       })
     })
-
-    // it('should reset table id order', async () => {})
   })
 })

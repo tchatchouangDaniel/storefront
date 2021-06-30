@@ -13,6 +13,8 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await userStore.delete(1)
+  await userStore.resetTable()
+  await store.resetTable()
 })
 
 describe('order model', () => {
@@ -49,10 +51,9 @@ describe('order model', () => {
       expect(store.addToCart).toBeDefined()
     })
 
-    // TODO: write code for resetTable
-    // it('should have a resetTable method', () => {
-    //   expect(store.resetTable).toBeDefined()
-    // })
+    it('should have a resetTable method', () => {
+      expect(store.resetTable).toBeDefined()
+    })
   })
 
   describe('orders store methods functionalities', () => {

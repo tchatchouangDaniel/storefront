@@ -13,7 +13,6 @@ export type Product = {
 }
 
 export class ProductsStore {
-  // TODO: add reset Table
   async index(): Promise<Product[]> {
     try {
       const conn = await Client.connect()
@@ -93,6 +92,17 @@ export class ProductsStore {
       return result.rows[0]
     } catch (error) {
       throw new Error(`Unable to delete product`)
+    }
+  }
+
+  async resetTable(): Promise<void> {
+    try {
+      const conn = await Client.connect()
+      const sql = 'alter sequence products_id_seq restart with 1'
+      await conn.query(sql)
+      conn.release()
+    } catch (error) {
+      throw new Error(`Unable to reset Table : ${error}`)
     }
   }
 }

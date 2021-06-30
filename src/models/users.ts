@@ -19,7 +19,6 @@ export type User = {
 }
 
 export class UsersStore {
-  // TODO: Create update
   async index(): Promise<User[]> {
     try {
       const conn = await Client.connect()
@@ -126,6 +125,17 @@ export class UsersStore {
       return result.rows[0]
     } catch (error) {
       throw new Error(`Unable to delete user : ${error}`)
+    }
+  }
+
+  async resetTable(): Promise<void> {
+    try {
+      const conn = await Client.connect()
+      const sql = 'alter sequence users_id_seq restart with 1'
+      await conn.query(sql)
+      conn.release()
+    } catch (error) {
+      throw new Error(`Unable to reset table : ${error}`)
     }
   }
 }

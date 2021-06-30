@@ -9,6 +9,10 @@ dotenv.config()
 const store = new UsersStore()
 const pepper = process.env.BCRYPT_PASSWORD
 
+afterAll(async () => {
+  await store.resetTable()
+})
+
 describe('user model', () => {
   describe('users store methods existence', () => {
     it('should have an index method', () => {
@@ -35,9 +39,9 @@ describe('user model', () => {
       expect(store.login).toBeDefined()
     })
     // TODO: write code for resetTable
-    // it('should have a resetTable method', () => {
-    //   expect(store.resetTable).toBeDefined()
-    // })
+    it('should have a resetTable method', () => {
+      expect(store.resetTable).toBeDefined()
+    })
   })
 
   describe('users store methods functionalities', () => {
@@ -122,7 +126,5 @@ describe('user model', () => {
         await bcrypt.compare(`chicken${pepper}`, result.password)
       ).toBeTrue()
     })
-
-    // it('should reset table id order', async () => {})
   })
 })

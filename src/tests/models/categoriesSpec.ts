@@ -5,6 +5,10 @@ import { CategoriesStore } from '../../models/categories'
 
 const store = new CategoriesStore()
 
+afterAll(async () => {
+  await store.resetTable()
+})
+
 describe('categories model', () => {
   describe('categoriesStore method existence', () => {
     it('should have an index method', () => {
@@ -26,11 +30,9 @@ describe('categories model', () => {
     it('should have a delete method', () => {
       expect(store.delete).toBeDefined()
     })
-
-    // TODO: write code for resetTable
-    // it('should have a resetTable method', () => {
-    //   expect(store.resetTable).toBeDefined()
-    // })
+    it('should have a resetTable method', () => {
+      expect(store.resetTable).toBeDefined()
+    })
   })
 
   describe('categoriesStore method functionnalities', () => {
@@ -78,9 +80,5 @@ describe('categories model', () => {
         name: 'clothes',
       })
     })
-
-    // it('should reset table id order', async () => {
-
-    // })
   })
 })
