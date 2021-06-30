@@ -50,9 +50,7 @@ describe('user model', () => {
 
       expect(result.firstname).toEqual('daniel')
       expect(result.lastname).toEqual('paul')
-      expect(
-        await bcrypt.compare(`chicken${pepper}`, result.password)
-      ).toBeTrue()
+      expect(bcrypt.compareSync(`chicken${pepper}`, result.password)).toBeTrue()
     })
 
     it('should show all the user created', async () => {
@@ -61,7 +59,7 @@ describe('user model', () => {
       expect(result[0].firstname).toEqual('daniel')
       expect(result[0].lastname).toEqual('paul')
       expect(
-        await bcrypt.compare(`chicken${pepper}`, result[0].password)
+        bcrypt.compareSync(`chicken${pepper}`, result[0].password)
       ).toBeTrue()
     })
 
@@ -70,9 +68,7 @@ describe('user model', () => {
 
       expect(result.firstname).toEqual('daniel')
       expect(result.lastname).toEqual('paul')
-      expect(
-        await bcrypt.compare(`chicken${pepper}`, result.password)
-      ).toBeTrue()
+      expect(bcrypt.compareSync(`chicken${pepper}`, result.password)).toBeTrue()
     })
 
     it('should display the user logged in', async () => {
@@ -87,34 +83,28 @@ describe('user model', () => {
       const result = await store.update(1, 'ouokam')
       expect(result.firstname).toEqual('ouokam')
       expect(result.lastname).toEqual('paul')
-      expect(
-        await bcrypt.compare(`chicken${pepper}`, result.password)
-      ).toBeTrue()
+      expect(bcrypt.compareSync(`chicken${pepper}`, result.password)).toBeTrue()
     })
 
     it('should update user with id 1 lastname to claude', async () => {
       const result = await store.update(1, null, 'claude')
       expect(result.firstname).toEqual('ouokam')
       expect(result.lastname).toEqual('claude')
-      expect(
-        await bcrypt.compare(`chicken${pepper}`, result.password)
-      ).toBeTrue()
+      expect(bcrypt.compareSync(`chicken${pepper}`, result.password)).toBeTrue()
     })
 
     it('should update user with id 1 password to 1234', async () => {
       const result = await store.update(1, null, null, '1234')
       expect(result.firstname).toEqual('ouokam')
       expect(result.lastname).toEqual('claude')
-      expect(await bcrypt.compare(`1234${pepper}`, result.password)).toBeTrue()
+      expect(bcrypt.compareSync(`1234${pepper}`, result.password)).toBeTrue()
     })
 
     it('should update user with id 1 daniel paul chicken', async () => {
       const result = await store.update(1, 'daniel', 'paul', 'chicken')
       expect(result.firstname).toEqual('daniel')
       expect(result.lastname).toEqual('paul')
-      expect(
-        await bcrypt.compare(`chicken${pepper}`, result.password)
-      ).toBeTrue()
+      expect(bcrypt.compareSync(`chicken${pepper}`, result.password)).toBeTrue()
     })
 
     it('should delete user with id 1', async () => {
@@ -122,9 +112,7 @@ describe('user model', () => {
 
       expect(result.firstname).toEqual('daniel')
       expect(result.lastname).toEqual('paul')
-      expect(
-        await bcrypt.compare(`chicken${pepper}`, result.password)
-      ).toBeTrue()
+      expect(bcrypt.compareSync(`chicken${pepper}`, result.password)).toBeTrue()
     })
   })
 })

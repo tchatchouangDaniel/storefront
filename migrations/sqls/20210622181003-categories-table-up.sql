@@ -1,5 +1,4 @@
 CREATE TABLE categories (
-    id SERIAL, 
-    name varchar(100), 
-    primary key(id)
+    id SERIAL PRIMARY KEY, 
+    name varchar(100) 
 );

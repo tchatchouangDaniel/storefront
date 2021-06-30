@@ -7,10 +7,6 @@ import { CategoriesStore } from '../../models/categories'
 const store = new ProductsStore()
 const catStore = new CategoriesStore()
 
-beforeAll(async () => {
-  await catStore.create('shoes')
-})
-
 afterAll(async () => {
   await catStore.delete(1)
   await catStore.resetTable()
@@ -46,6 +42,7 @@ describe('product model', () => {
 
   describe('products store methods functionalities', () => {
     it('should create a new product', async () => {
+      await catStore.create('shoes')
       const result = await store.create(
         'air jordin',
         'go higher with air jordin',

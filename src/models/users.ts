@@ -53,7 +53,7 @@ export class UsersStore {
       const conn = await Client.connect()
       const sql =
         'insert into users (username,firstname, lastname, password) values($1,$2,$3,$4) returning *'
-      const passwordHash = await bcrypt.hash(`${password}${pepper}`, saltRounds)
+      const passwordHash = bcrypt.hashSync(`${password}${pepper}`, saltRounds)
       const result = await conn.query(sql, [
         username,
         firstname,
@@ -109,8 +109,7 @@ export class UsersStore {
     const result = await conn.query(sql, [username])
     if (result.rows.length) {
       const user = result.rows[0]
-      if (await bcrypt.compare(`${password}${pepper}`, user.password))
-        return user
+      if (bcrypt.compareSync(`${password}${pepper}`, user.password)) return user
     }
     conn.release()
     return null

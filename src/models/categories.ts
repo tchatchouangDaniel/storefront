@@ -35,9 +35,14 @@ export class CategoriesStore {
 
   async create(name: string): Promise<Category> {
     try {
+      const sqlId = 'Select max(id) from categories'
       const conn = await Client.connect()
-      const sql = 'insert into categories(name) values($1) returning *'
-      const result = await conn.query(sql, [name])
+      const maxIdResult = await conn.query(sqlId)
+      const maxId = maxIdResult.rows[0].max
+      const newId = maxId ? maxId + 1 : 1
+      const sql = 'INSERT INTO categories (id,name) VALUES($1,$2) RETURNING *'
+      const result = await conn.query(sql, [newId, name])
+      conn.release()
       return result.rows[0]
     } catch (error) {
       throw new Error(`Unable to create category : ${error}`)
@@ -59,7 +64,7 @@ export class CategoriesStore {
   async delete(id: string | number): Promise<Category> {
     try {
       const conn = await Client.connect()
-      const sql = 'delete from categories where id=($1)'
+      const sql = 'delete from categories where id=($1) returning *'
       const result = await conn.query(sql, [id])
       conn.release()
       return result.rows[0]
