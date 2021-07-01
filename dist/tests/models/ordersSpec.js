@@ -7,11 +7,6 @@ const orders_1 = require("../../models/orders");
 const users_1 = require("../../models/users");
 const store = new orders_1.OrdersStore();
 const userStore = new users_1.UsersStore();
-afterAll(async () => {
-    await userStore.delete(1);
-    await userStore.resetTable();
-    await store.resetTable();
-});
 describe('order model', () => {
     describe('orders store methods existence', () => {
         it('should have an index method', () => {
@@ -79,8 +74,10 @@ describe('order model', () => {
             });
         });
         it('should delete order with id 1', async () => {
-            await userStore.delete(1);
             const result = await store.delete(1);
+            await store.resetTable();
+            await userStore.delete(1);
+            await userStore.resetTable();
             expect(result).toEqual({ id: 1, user_id: 1, status: 'complete' });
         });
     });

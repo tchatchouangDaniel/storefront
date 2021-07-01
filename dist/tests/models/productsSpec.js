@@ -7,11 +7,6 @@ const products_1 = require("../../models/products");
 const categories_1 = require("../../models/categories");
 const store = new products_1.ProductsStore();
 const catStore = new categories_1.CategoriesStore();
-afterAll(async () => {
-    await catStore.delete(1);
-    await catStore.resetTable();
-    await store.resetTable();
-});
 describe('product model', () => {
     describe('products store methods existence', () => {
         it('should have an index method', () => {
@@ -93,6 +88,9 @@ describe('product model', () => {
         });
         it('should delete product with id 1', async () => {
             const result = await store.delete(1);
+            await store.resetTable();
+            await catStore.delete(1);
+            await catStore.resetTable();
             expect(result).toEqual({
                 id: 1,
                 name: 'air nike',

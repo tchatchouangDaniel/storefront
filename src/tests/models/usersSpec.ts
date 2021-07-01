@@ -9,10 +9,6 @@ dotenv.config()
 const store = new UsersStore()
 const pepper = process.env.BCRYPT_PASSWORD
 
-afterAll(async () => {
-  await store.resetTable()
-})
-
 describe('user model', () => {
   describe('users store methods existence', () => {
     it('should have an index method', () => {
@@ -107,8 +103,9 @@ describe('user model', () => {
     })
 
     it('should delete user with id 1', async () => {
+      // Aslo process id sequence reset to 1 after deletion
       const result = await store.delete(1)
-
+      await store.resetTable()
       expect(result.firstname).toEqual('daniel')
       expect(result.lastname).toEqual('paul')
       expect(bcrypt.compareSync(`chicken${pepper}`, result.password)).toBeTrue()

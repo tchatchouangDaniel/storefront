@@ -59,6 +59,7 @@ describe('categories model', () => {
         });
         it('should delete category cloth', async () => {
             const result = await store.delete(1);
+            await store.resetTable();
             expect(result).toEqual({
                 id: 1,
                 name: 'clothes',

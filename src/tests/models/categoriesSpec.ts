@@ -70,7 +70,9 @@ describe('categories model', () => {
     })
 
     it('should delete category cloth', async () => {
+      // Aslo process id sequence reset to 1 after deletion
       const result = await store.delete(1)
+      await store.resetTable()
       expect(result).toEqual({
         id: 1,
         name: 'clothes',

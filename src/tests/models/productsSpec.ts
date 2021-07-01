@@ -7,12 +7,6 @@ import { CategoriesStore } from '../../models/categories'
 const store = new ProductsStore()
 const catStore = new CategoriesStore()
 
-afterAll(async () => {
-  await catStore.delete(1)
-  await catStore.resetTable()
-  await store.resetTable()
-})
-
 describe('product model', () => {
   describe('products store methods existence', () => {
     it('should have an index method', () => {
@@ -119,8 +113,11 @@ describe('product model', () => {
     })
 
     it('should delete product with id 1', async () => {
+      // Aslo process id sequence reset to 1 after deletion
       const result = await store.delete(1)
-
+      await store.resetTable()
+      await catStore.delete(1)
+      await catStore.resetTable()
       expect(result).toEqual({
         id: 1,
         name: 'air nike',
