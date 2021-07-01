@@ -105,11 +105,15 @@ export class OrdersStore {
     }
   }
 
-  async RemoveFromCart(productId: string | number): Promise<OrderProduct> {
+  async RemoveFromCart(
+    orderId: string | number,
+    productId: string | number
+  ): Promise<OrderProduct> {
     try {
       const conn = await Client.connect()
-      const sql = 'delete from order_products where product_id=($1) returing *'
-      const result = await conn.query(sql, [productId])
+      const sql =
+        'delete from order_products where order_id=($1) and product_id=($2) returing *'
+      const result = await conn.query(sql, [orderId, productId])
       conn.release()
       return result.rows[0]
     } catch (error) {
