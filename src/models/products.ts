@@ -8,6 +8,7 @@ export type Product = {
   id: string | number
   name: string
   description: string
+  price: number
   // eslint-disable-next-line camelcase
   category_id: string | number
 }
@@ -41,14 +42,20 @@ export class ProductsStore {
     name: string,
     description: string,
     // eslint-disable-next-line camelcase
-    category_id: string | number
+    category_id: string | number,
+    price: number
   ): Promise<Product> {
     try {
       const conn = await Client.connect()
       const sql =
-        'insert into products(name, description, category_id) values($1,$2,$3) returning *'
-      // eslint-disable-next-line camelcase
-      const result = await conn.query(sql, [name, description, category_id])
+        'insert into products(name, description, price, category_id) values($1,$2,$3,$4) returning *'
+      const result = await conn.query(sql, [
+        name,
+        description,
+        price,
+        // eslint-disable-next-line camelcase
+        category_id,
+      ])
       conn.release()
       return result.rows[0]
     } catch (error) {
@@ -59,7 +66,8 @@ export class ProductsStore {
   async update(
     id: string | number,
     name?: string | null,
-    description?: string | null
+    description?: string | null,
+    price?: number | null
   ): Promise<Product> {
     try {
       const conn = await Client.connect()
@@ -75,6 +83,10 @@ export class ProductsStore {
       if (description) {
         sql = 'update products set description=($1) where id=($2) returning *'
         result = await conn.query(sql, [description, id])
+      }
+      if (price) {
+        sql = 'update products set price=($1) where id=($2) returning *'
+        result = await conn.query(sql, [price, id])
       }
       conn.release()
       return result!.rows[0]

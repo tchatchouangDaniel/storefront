@@ -7,6 +7,7 @@ import categoriesRoute from './handlers/categories'
 import ordersRoute from './handlers/orders'
 import productsRoute from './handlers/products'
 import usersRoute from './handlers/users'
+import dashboardRoute from './handlers/dashboard'
 
 const app: express.Application = express()
 const address: string = '0.0.0.0:3000'
@@ -21,6 +22,7 @@ categoriesRoute(app)
 ordersRoute(app)
 productsRoute(app)
 usersRoute(app)
+dashboardRoute(app)
 
 app.listen(3000, () => {
   // eslint-disable-next-line no-console

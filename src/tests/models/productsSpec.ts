@@ -40,7 +40,8 @@ describe('product model', () => {
       const result = await store.create(
         'air jordin',
         'go higher with air jordin',
-        1
+        1,
+        10
       )
 
       expect(result).toEqual({
@@ -48,6 +49,7 @@ describe('product model', () => {
         name: 'air jordin',
         description: 'go higher with air jordin',
         category_id: 1,
+        price: 10,
       })
     })
 
@@ -60,6 +62,7 @@ describe('product model', () => {
           name: 'air jordin',
           description: 'go higher with air jordin',
           category_id: 1,
+          price: 10,
         },
       ])
     })
@@ -72,36 +75,45 @@ describe('product model', () => {
         name: 'air jordin',
         description: 'go higher with air jordin',
         category_id: 1,
+        price: 10,
       })
     })
 
     it('should update product with id 1 description to "go higher with air jordan"', async () => {
-      const result = await store.update(1, null, 'go higher with air jordan')
+      const result = await store.update(
+        1,
+        null,
+        'go higher with air jordan',
+        null
+      )
 
       expect(result).toEqual({
         id: 1,
         name: 'air jordin',
         description: 'go higher with air jordan',
         category_id: 1,
+        price: 10,
       })
     })
 
     it('should update product with id 1 title to "air jordan"', async () => {
-      const result = await store.update(1, 'air jordan', null)
+      const result = await store.update(1, 'air jordan', null, null)
 
       expect(result).toEqual({
         id: 1,
         name: 'air jordan',
         description: 'go higher with air jordan',
         category_id: 1,
+        price: 10,
       })
     })
 
-    it('should update product with id 1 title to "air nike" and description to "go higher with air nike"', async () => {
+    it('should update product with id 1 title to "air nike" and description to "go higher with air nike" and price to be 12', async () => {
       const result = await store.update(
         1,
         'air nike',
-        'go higher with air nike'
+        'go higher with air nike',
+        12
       )
 
       expect(result).toEqual({
@@ -109,6 +121,7 @@ describe('product model', () => {
         name: 'air nike',
         description: 'go higher with air nike',
         category_id: 1,
+        price: 12,
       })
     })
 
@@ -123,6 +136,7 @@ describe('product model', () => {
         name: 'air nike',
         description: 'go higher with air nike',
         category_id: 1,
+        price: 12,
       })
     })
   })

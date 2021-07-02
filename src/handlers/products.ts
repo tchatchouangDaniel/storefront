@@ -26,10 +26,10 @@ const show = async (_req: Request, res: Response) => {
 
 const create = async (_req: Request, res: Response) => {
   try {
-    const { name, description, categoryId } = _req.body
-    if (!name && !description && !categoryId)
+    const { name, description, categoryId, price } = _req.body
+    if (!name && !description && !categoryId && !price)
       throw new Error('Missing parameter')
-    const result = await store.create(name, description, categoryId)
+    const result = await store.create(name, description, categoryId, price)
     res.send(result)
   } catch (error) {
     res.status(400).send(`Unable to create product : ${error}`)
