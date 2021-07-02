@@ -1,8 +1,13 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 import express, { Request, Response } from 'express'
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
 import { UsersStore } from '../models/users'
+import { verifyAuth } from '../middleware/verifyAuth'
 
+dotenv.config()
+const secret = process.env.TOKEN_SECRET as string
 const store = new UsersStore()
 
 const index = async (_req: Request, res: Response) => {
@@ -67,7 +72,9 @@ const login = async (_req: Request, res: Response) => {
     const { username, password } = _req.body
     if (!username || !password) throw new Error('Missing parameter(s)')
     const result = await store.login(username, password)
-    res.send(result)
+    if (!result) throw new Error('wrong username or password')
+    const token = jwt.sign({ user: result }, secret)
+    res.send(token)
   } catch (error) {
     res.status(400).send(`Unable to authenticate : ${error}`)
   }
@@ -78,8 +85,8 @@ const usersRoute = (app: express.Application) => {
   app.get('/users/:id', show)
   app.post('/users', express.json(), create)
   app.post('/users/login', express.json(), login)
-  app.put('/users', express.json(), update)
-  app.delete('/users/:id', express.json(), remove)
+  app.put('/users', express.json(), verifyAuth, update)
+  app.delete('/users/:id', express.json(), verifyAuth, remove)
 }
 
 export default usersRoute
