@@ -2,6 +2,7 @@
 /* eslint-disable import/no-unresolved */
 import express, { Request, Response } from 'express'
 import { OrdersStore } from '../models/orders'
+import { verifyAuth } from '../middleware/verifyAuth'
 
 const store = new OrdersStore()
 
@@ -85,12 +86,17 @@ const remove = async (_req: Request, res: Response) => {
 
 const ordersRoute = (app: express.Application) => {
   app.get('/orders', index)
-  app.get('/orders/:id', show)
-  app.post('/orders', create)
-  app.post('/orders/:id/products', express.json(), addToCart)
-  app.put('/orders/:orderid/products/:productid', express.json(), updateCart)
-  app.delete('/orders/:orderid/products/:productid', removeFromCart)
-  app.delete('/orders/:id', remove)
+  app.get('/orders/:id', verifyAuth, show)
+  app.post('/orders', verifyAuth, create)
+  app.post('/orders/:id/products', express.json(), verifyAuth, addToCart)
+  app.put(
+    '/orders/:orderid/products/:productid',
+    express.json(),
+    verifyAuth,
+    updateCart
+  )
+  app.delete('/orders/:orderid/products/:productid', verifyAuth, removeFromCart)
+  app.delete('/orders/:id', verifyAuth, remove)
 }
 
 export default ordersRoute

@@ -4,7 +4,7 @@ import express, { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import { UsersStore } from '../models/users'
-import { verifyAuth } from '../middleware/verifyAuth'
+import { verifyAuthId } from '../middleware/verifyAuth'
 
 dotenv.config()
 const secret = process.env.TOKEN_SECRET as string
@@ -82,11 +82,11 @@ const login = async (_req: Request, res: Response) => {
 
 const usersRoute = (app: express.Application) => {
   app.get('/users', index)
-  app.get('/users/:id', show)
+  app.get('/users/:id', verifyAuthId, show)
   app.post('/users', express.json(), create)
   app.post('/users/login', express.json(), login)
-  app.put('/users', express.json(), verifyAuth, update)
-  app.delete('/users/:id', express.json(), verifyAuth, remove)
+  app.put('/users/:id', express.json(), verifyAuthId, update)
+  app.delete('/users/:id', express.json(), verifyAuthId, remove)
 }
 
 export default usersRoute
