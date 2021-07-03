@@ -17,6 +17,10 @@ describe('order model', () => {
       expect(store.show).toBeDefined()
     })
 
+    it('should have an update method', () => [
+      expect(store.showUserOrder).toBeDefined(),
+    ])
+
     it('should have an update method', () => {
       expect(store.update).toBeDefined()
     })
@@ -72,6 +76,16 @@ describe('order model', () => {
 
     it('should show order with id 1', async () => {
       const result = await store.show(1)
+
+      expect(result).toEqual({
+        id: 1,
+        user_id: 1,
+        status: 'active',
+      })
+    })
+
+    it('should show order of user with id 1', async () => {
+      const result = await store.showUserOrder(1)
 
       expect(result).toEqual({
         id: 1,

@@ -6,7 +6,6 @@
 import Client from '../database'
 
 export class DashBoardQueries {
-  // TODO: Add tests
   async productsInOrders(): Promise<
     {
       name: string
@@ -27,7 +26,6 @@ export class DashBoardQueries {
     }
   }
 
-  // TODO: Add tests
   async productsInCart(userId: string | number): Promise<
     {
       // eslint-disable-next-line camelcase

@@ -26,6 +26,17 @@ const show = async (_req: Request, res: Response) => {
   }
 }
 
+const showUserOrder = async (_req: Request, res: Response) => {
+  try {
+    const { userId } = _req.params
+    if (!userId) throw new Error('Missing userId parameter')
+    const result = store.showUserOrder(userId)
+    res.send(result)
+  } catch (error) {
+    res.status(400).send(`Unable to show order : ${error}`)
+  }
+}
+
 const create = async (_req: Request, res: Response) => {
   try {
     const { userId, status } = _req.body
@@ -87,6 +98,7 @@ const remove = async (_req: Request, res: Response) => {
 const ordersRoute = (app: express.Application) => {
   app.get('/orders', index)
   app.get('/orders/:id', verifyAuth, show)
+  app.get('/orders/:id', verifyAuth, showUserOrder)
   app.post('/orders', verifyAuth, create)
   app.post('/orders/:id/products', express.json(), verifyAuth, addToCart)
   app.put(

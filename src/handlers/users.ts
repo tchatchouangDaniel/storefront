@@ -36,7 +36,8 @@ const create = async (_req: Request, res: Response) => {
     if (!username || !firstname || !lastname || password)
       throw new Error('Unable to create a new user')
     const result = await store.create(username, firstname, lastname, password)
-    res.send(result)
+    const token = jwt.sign({ user: result }, secret)
+    res.send(token)
   } catch (error) {
     res.status(400).send(`Unable to show user : ${error}`)
   }

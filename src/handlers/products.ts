@@ -2,6 +2,7 @@
 /* eslint-disable import/no-unresolved */
 import express, { Request, Response } from 'express'
 import { ProductsStore } from '../models/products'
+import { verifyAuth } from '../middleware/verifyAuth'
 
 const store = new ProductsStore()
 
@@ -63,7 +64,7 @@ const remove = async (_req: Request, res: Response) => {
 const productsRoute = (app: express.Application) => {
   app.get('/products', index)
   app.get('/products/:id', show)
-  app.post('/products', express.json(), create)
+  app.post('/products', verifyAuth, express.json(), create)
   app.put('/products/:id', express.json(), update)
   app.delete('/products/:id', remove)
 }

@@ -22,7 +22,6 @@ export type OrderProduct = {
 }
 
 export class OrdersStore {
-  // TODO: add Reset
   async index(): Promise<Order[]> {
     try {
       const conn = await Client.connect()
@@ -44,6 +43,18 @@ export class OrdersStore {
       return result.rows[0]
     } catch (error) {
       throw new Error(`Unable to fetch order : ${error}`)
+    }
+  }
+
+  async showUserOrder(userId: string | number): Promise<Order> {
+    try {
+      const conn = await Client.connect()
+      const sql = 'select * from orders where user_id=($1)'
+      const result = await conn.query(sql, [userId])
+      conn.release()
+      return result.rows[0]
+    } catch (error) {
+      throw new Error(`Unable to fetch user order : ${error}`)
     }
   }
 
