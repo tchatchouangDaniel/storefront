@@ -13,7 +13,8 @@
     "lint": "eslint src/**/*.ts --fix",
     "prettier": "prettier --config .prettierrc --write ./src/**/*.ts",
     "test": "tsc --build && db-migrate --env test up && jasmine-ts && db-migrate db:drop test && yarn run reset",
-    "reset": "db-migrate --env test reset"
+    "reset-test": "db-migrate --env test reset",
+    "reset-dev": "db-migrate reset"
   },
   "author": "Udacity",
   "license": "ISC",

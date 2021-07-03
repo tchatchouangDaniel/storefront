@@ -32,12 +32,13 @@ export const verifyAuthId = (
   next: NextFunction
 ) => {
   try {
-    const userId = _req.params.id
+    const userId = _req.params.id ? _req.params.id : _req.params.userId
     if (!userId) throw new Error('Missing id parameter')
     const authorizationHeader = _req.headers.authorization
     const token = authorizationHeader?.split(' ')[1] as string
     const { user } = jwt.verify(token, secret) as { user: User }
-    if (user.id !== userId) throw new Error('No Authorization')
+    if (Number(user.id) !== Number(userId))
+      throw new Error(`No authorization : ${userId} and ${user.id}`)
     next()
   } catch (error) {
     res.status(401).send(`Unable to authenticate : ${error}`)

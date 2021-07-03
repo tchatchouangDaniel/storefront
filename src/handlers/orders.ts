@@ -2,7 +2,7 @@
 /* eslint-disable import/no-unresolved */
 import express, { Request, Response } from 'express'
 import { OrdersStore } from '../models/orders'
-import { verifyAuth } from '../middleware/verifyAuth'
+import { verifyAuth, verifyAuthId } from '../middleware/verifyAuth'
 
 const store = new OrdersStore()
 
@@ -39,9 +39,9 @@ const showUserOrder = async (_req: Request, res: Response) => {
 
 const create = async (_req: Request, res: Response) => {
   try {
-    const { userId, status } = _req.body
-    if (!userId && !status) throw new Error('Missing parameter')
-    const result = await store.create(userId, status)
+    const { userId } = _req.body
+    if (!userId) throw new Error('Missing parameter')
+    const result = await store.create(userId)
     res.send(result)
   } catch (error) {
     res.status(400).send(`Unable to create order : ${error}`)
@@ -50,10 +50,11 @@ const create = async (_req: Request, res: Response) => {
 
 const addToCart = async (_req: Request, res: Response) => {
   try {
-    const { productId, orderId, quantity } = _req.body
-    if (!productId || !orderId || !quantity)
-      throw new Error('Missing parameter(s)')
-    const result = await store.addToCart(productId, orderId, Number(quantity))
+    const { id } = _req.params
+    if (!id) throw new Error('Missing id parameter')
+    const { productId, quantity } = _req.body
+    if (!productId || !quantity) throw new Error('Missing parameter(s)')
+    const result = await store.addToCart(productId, id, Number(quantity))
     res.send(result)
   } catch (error) {
     res.status(400).send(`Unable to add to cart : ${error}`)
@@ -98,8 +99,8 @@ const remove = async (_req: Request, res: Response) => {
 const ordersRoute = (app: express.Application) => {
   app.get('/orders', index)
   app.get('/orders/:id', verifyAuth, show)
-  app.get('/orders/:id', verifyAuth, showUserOrder)
-  app.post('/orders', verifyAuth, create)
+  app.get('/orders/:userId', showUserOrder)
+  app.post('/orders', verifyAuth, express.json(), create)
   app.post('/orders/:id/products', express.json(), verifyAuth, addToCart)
   app.put(
     '/orders/:orderid/products/:productid',

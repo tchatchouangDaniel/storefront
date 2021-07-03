@@ -107,7 +107,7 @@ export class OrdersStore {
     try {
       const conn = await Client.connect()
       const sql =
-        'insert into order_products (quantity,order_id,product_id) values($1,$2,$3)'
+        'insert into order_products (quantity,order_id,product_id) values($1,$2,$3) returning *'
       const result = await conn.query(sql, [quantity, orderId, productId])
       conn.release()
       return result.rows[0]
@@ -123,7 +123,7 @@ export class OrdersStore {
     try {
       const conn = await Client.connect()
       const sql =
-        'delete from order_products where order_id=($1) and product_id=($2) returing *'
+        'delete from order_products where order_id=($1) and product_id=($2) returning *'
       const result = await conn.query(sql, [orderId, productId])
       conn.release()
       return result.rows[0]

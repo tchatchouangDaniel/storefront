@@ -36,7 +36,7 @@ export class DashBoardQueries {
     try {
       const conn = await Client.connect()
       const sql =
-        'select order_products.product_id, products.name, order_products.quantity from order_products, products, orders where order_products.product_id=products.id and orders.user_id=($1) and orders.id = orders_products.id'
+        'select order_products.product_id, products.name, order_products.quantity from order_products, products, orders where order_products.product_id=products.id and orders.user_id=($1) and orders.id = order_products.id'
       const result = await conn.query(sql, [userId])
       conn.release()
       return result.rows

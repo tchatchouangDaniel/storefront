@@ -65,9 +65,9 @@ export class ProductsStore {
 
   async update(
     id: string | number,
-    name?: string | null,
-    description?: string | null,
-    price?: number | null
+    name: string | null = null,
+    description: string | null = null,
+    price: number | null = null
   ): Promise<Product> {
     try {
       const conn = await Client.connect()

@@ -1,6 +1,7 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 import express, { Request, Response } from 'express'
+import { verifyAuth } from '../middleware/verifyAuth'
 import { DashBoardQueries } from '../services/dashboard'
 
 const queries = new DashBoardQueries()
@@ -26,7 +27,7 @@ const productsInCart = async (_req: Request, res: Response) => {
 
 const dashboardRoute = (app: express.Application) => {
   app.get('/products_in_orders', productsInOrders)
-  app.get('/cart/:id', productsInCart)
+  app.get('/cart/:id', verifyAuth, productsInCart)
 }
 
 export default dashboardRoute

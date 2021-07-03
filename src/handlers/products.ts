@@ -41,9 +41,9 @@ const update = async (_req: Request, res: Response) => {
   try {
     const { id } = _req.params
     if (!id) throw new Error('Missing id parameter')
-    const { name, description } = _req.body
-    if (!name && !description) throw new Error('Missing parameters')
-    const result = await store.update(name, description)
+    const { name, description, price } = _req.body
+    if (!name && !description && !price) throw new Error('Missing parameters')
+    const result = await store.update(id, name, description, price)
     res.send(result)
   } catch (error) {
     res.status(400).send(`Unable to update product : ${error}`)
@@ -65,7 +65,7 @@ const productsRoute = (app: express.Application) => {
   app.get('/products', index)
   app.get('/products/:id', show)
   app.post('/products', verifyAuth, express.json(), create)
-  app.put('/products/:id', express.json(), update)
+  app.put('/products/:id', verifyAuth, express.json(), update)
   app.delete('/products/:id', remove)
 }
 
