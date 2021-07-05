@@ -38,9 +38,10 @@ I added a table for categories.
 I added the endpoints for categories in `REQUIREMENTS.md`
 
 So these are the steps to start adding product:
-1- create a category
-2- create a product
-3- create a user
-4- create an order
+
+1. create a category
+2. create a product
+3. create a user
+4. create an order
 
 and from there you can are good to go.
