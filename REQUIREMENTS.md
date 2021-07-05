@@ -25,6 +25,14 @@ These are the notes from a meeting with the frontend developer that describe wha
 - Current Order by user (args: user id)[token required] /orders/:userId [GET]
 - [OPTIONAL] Completed Orders by user (args: user id)[token required] /orders/completed/:userId [GET]
 
+#### Categories (added)
+
+- Get all categories /categories [GET]
+- Get a specific category (args : category id) /categories/:id [GET]
+- Create a category /categories [POST]
+- update a category (args : category id) /categories/:id [PUT] : you can update the "name"
+- delete a category (args : category id) /categories/:id [DELETE]
+
 ## Data Shapes
 
 #### Product

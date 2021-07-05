@@ -5,12 +5,6 @@ import { OrdersStore } from '../models/orders'
 import { verifyAuth } from '../middleware/verifyAuth'
 
 const store = new OrdersStore()
-const test = async () => {
-  // eslint-disable-next-line no-console
-  console.log(await store.showUserOrder(1))
-}
-
-test()
 
 const index = async (_req: Request, res: Response) => {
   try {
