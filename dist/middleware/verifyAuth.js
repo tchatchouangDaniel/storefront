@@ -14,7 +14,9 @@ var verifyAuth = function (_req, res, next) {
         var token = authorizationHeader === null || authorizationHeader === void 0 ? void 0 : authorizationHeader.split(' ')[1];
         var user = jsonwebtoken_1["default"].verify(token, secret).user;
         // @ts-ignore
-        _req.id = user.id;
+        _req.userId = user.id;
+        // @ts-ignore
+        _req.username = user.username;
         next();
     }
     catch (error) {

@@ -19,7 +19,9 @@ export const verifyAuth = (
     const token = authorizationHeader?.split(' ')[1] as string
     const { user } = jwt.verify(token, secret) as { user: User }
     // @ts-ignore
-    _req.id = user.id
+    _req.userId = user.id
+    // @ts-ignore
+    _req.username = user.username
     next()
   } catch (error) {
     res.status(401).send(`Unable to authenticate : ${error}`)

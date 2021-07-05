@@ -45,6 +45,22 @@ var express_1 = __importDefault(require("express"));
 var orders_1 = require("../models/orders");
 var verifyAuth_1 = require("../middleware/verifyAuth");
 var store = new orders_1.OrdersStore();
+var test = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, _b;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
+            case 0:
+                // eslint-disable-next-line no-console
+                _b = (_a = console).log;
+                return [4 /*yield*/, store.showUserOrder(1)];
+            case 1:
+                // eslint-disable-next-line no-console
+                _b.apply(_a, [_c.sent()]);
+                return [2 /*return*/];
+        }
+    });
+}); };
+test();
 var index = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var result, error_1;
     return __generator(this, function (_a) {
@@ -58,46 +74,54 @@ var index = function (_req, res) { return __awaiter(void 0, void 0, void 0, func
                 return [3 /*break*/, 3];
             case 2:
                 error_1 = _a.sent();
-                res.status(400).send("Unable to show all orders");
+                res.status(400).send("Unable to show all orders : " + error_1);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
     });
 }); };
 var show = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, result;
+    var id, result, error_2;
     return __generator(this, function (_a) {
-        try {
-            id = _req.params.id;
-            if (!id)
-                throw new Error('Missing id parameter');
-            result = store.show(id);
-            res.send(result);
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                id = _req.params.id;
+                return [4 /*yield*/, store.show(id)];
+            case 1:
+                result = _a.sent();
+                res.send(result);
+                return [3 /*break*/, 3];
+            case 2:
+                error_2 = _a.sent();
+                res.status(400).send("Unable to show order : " + error_2);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
-        catch (error) {
-            res.status(400).send("Unable to show order : " + error);
-        }
-        return [2 /*return*/];
     });
 }); };
 var showUserOrder = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var userId, result;
+    var userId, result, error_3;
     return __generator(this, function (_a) {
-        try {
-            userId = _req.params.userId;
-            if (!userId)
-                throw new Error('Missing userId parameter');
-            result = store.showUserOrder(userId);
-            res.send(result);
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                userId = _req.params.userId;
+                return [4 /*yield*/, store.showUserOrder(userId)];
+            case 1:
+                result = _a.sent();
+                res.send(result);
+                return [3 /*break*/, 3];
+            case 2:
+                error_3 = _a.sent();
+                res.status(400).send("Unable to show order : " + error_3);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
-        catch (error) {
-            res.status(400).send("Unable to show order : " + error);
-        }
-        return [2 /*return*/];
     });
 }); };
 var create = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var userId, result, error_2;
+    var userId, result, error_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -111,40 +135,43 @@ var create = function (_req, res) { return __awaiter(void 0, void 0, void 0, fun
                 res.send(result);
                 return [3 /*break*/, 3];
             case 2:
-                error_2 = _a.sent();
-                res.status(400).send("Unable to create order : " + error_2);
+                error_4 = _a.sent();
+                res.status(400).send("Unable to create order : " + error_4);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
     });
 }); };
 var addToCart = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, _a, productId, quantity, result, error_3;
+    var username, id, _a, productId, quantity, result, error_5;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 _b.trys.push([0, 2, , 3]);
+                username = _req.username;
+                if (!username)
+                    throw new Error('Missing username parameter');
                 id = _req.params.id;
                 if (!id)
                     throw new Error('Missing id parameter');
                 _a = _req.body, productId = _a.productId, quantity = _a.quantity;
                 if (!productId || !quantity)
                     throw new Error('Missing parameter(s)');
-                return [4 /*yield*/, store.addToCart(productId, id, Number(quantity))];
+                return [4 /*yield*/, store.addToCart(username, productId, id, Number(quantity))];
             case 1:
                 result = _b.sent();
                 res.send(result);
                 return [3 /*break*/, 3];
             case 2:
-                error_3 = _b.sent();
-                res.status(400).send("Unable to add to cart : " + error_3);
+                error_5 = _b.sent();
+                res.status(400).send("Unable to add to cart : " + error_5);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
     });
 }); };
 var updateCart = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, productid, orderid, quantity, result, error_4;
+    var _a, productid, orderid, quantity, result, error_6;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -159,15 +186,15 @@ var updateCart = function (_req, res) { return __awaiter(void 0, void 0, void 0,
                 res.send(result);
                 return [3 /*break*/, 3];
             case 2:
-                error_4 = _b.sent();
-                res.status(400).send("Unable to update items in cart : " + error_4);
+                error_6 = _b.sent();
+                res.status(400).send("Unable to update items in cart : " + error_6);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
     });
 }); };
 var removeFromCart = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, orderid, productid, result, error_5;
+    var _a, orderid, productid, result, error_7;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -181,15 +208,15 @@ var removeFromCart = function (_req, res) { return __awaiter(void 0, void 0, voi
                 res.send(result);
                 return [3 /*break*/, 3];
             case 2:
-                error_5 = _b.sent();
-                res.status(400).send("Unable to remove product from cart : " + error_5);
+                error_7 = _b.sent();
+                res.status(400).send("Unable to remove product from cart : " + error_7);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
     });
 }); };
 var remove = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, result, error_6;
+    var id, result, error_8;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -203,8 +230,8 @@ var remove = function (_req, res) { return __awaiter(void 0, void 0, void 0, fun
                 res.send(result);
                 return [3 /*break*/, 3];
             case 2:
-                error_6 = _a.sent();
-                res.status(400).send("Unable to delete order : " + error_6);
+                error_8 = _a.sent();
+                res.status(400).send("Unable to delete order : " + error_8);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
@@ -213,7 +240,7 @@ var remove = function (_req, res) { return __awaiter(void 0, void 0, void 0, fun
 var ordersRoute = function (app) {
     app.get('/orders', index);
     app.get('/orders/:id', verifyAuth_1.verifyAuth, show);
-    app.get('/orders/:userId', showUserOrder);
+    app.get('/orders/:userId', verifyAuth_1.verifyAuth, showUserOrder);
     app.post('/orders', verifyAuth_1.verifyAuth, express_1["default"].json(), create);
     app.post('/orders/:id/products', express_1["default"].json(), verifyAuth_1.verifyAuth, addToCart);
     app.put('/orders/:orderid/products/:productid', express_1["default"].json(), verifyAuth_1.verifyAuth, updateCart);

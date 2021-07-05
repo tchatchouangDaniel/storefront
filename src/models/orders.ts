@@ -100,6 +100,7 @@ export class OrdersStore {
   }
 
   async addToCart(
+    username: string,
     productId: string | number,
     orderId: string | number,
     quantity: number
@@ -107,8 +108,13 @@ export class OrdersStore {
     try {
       const conn = await Client.connect()
       const sql =
-        'insert into order_products (quantity,order_id,product_id) values($1,$2,$3) returning *'
-      const result = await conn.query(sql, [quantity, orderId, productId])
+        'insert into order_products (username,quantity,order_id,product_id) values($1,$2,$3,$4) returning *'
+      const result = await conn.query(sql, [
+        username,
+        quantity,
+        orderId,
+        productId,
+      ])
       conn.release()
       return result.rows[0]
     } catch (error) {

@@ -2,24 +2,29 @@
 /* eslint-disable import/no-unresolved */
 import express, { Request, Response } from 'express'
 import { OrdersStore } from '../models/orders'
-import { verifyAuth, verifyAuthId } from '../middleware/verifyAuth'
+import { verifyAuth } from '../middleware/verifyAuth'
 
 const store = new OrdersStore()
+const test = async () => {
+  // eslint-disable-next-line no-console
+  console.log(await store.showUserOrder(1))
+}
+
+test()
 
 const index = async (_req: Request, res: Response) => {
   try {
     const result = await store.index()
     res.send(result)
   } catch (error) {
-    res.status(400).send(`Unable to show all orders`)
+    res.status(400).send(`Unable to show all orders : ${error}`)
   }
 }
 
 const show = async (_req: Request, res: Response) => {
   try {
     const { id } = _req.params
-    if (!id) throw new Error('Missing id parameter')
-    const result = store.show(id)
+    const result = await store.show(id)
     res.send(result)
   } catch (error) {
     res.status(400).send(`Unable to show order : ${error}`)
@@ -29,8 +34,7 @@ const show = async (_req: Request, res: Response) => {
 const showUserOrder = async (_req: Request, res: Response) => {
   try {
     const { userId } = _req.params
-    if (!userId) throw new Error('Missing userId parameter')
-    const result = store.showUserOrder(userId)
+    const result = await store.showUserOrder(userId)
     res.send(result)
   } catch (error) {
     res.status(400).send(`Unable to show order : ${error}`)
@@ -50,11 +54,19 @@ const create = async (_req: Request, res: Response) => {
 
 const addToCart = async (_req: Request, res: Response) => {
   try {
+    // @ts-ignore
+    const { username } = _req
+    if (!username) throw new Error('Missing username parameter')
     const { id } = _req.params
     if (!id) throw new Error('Missing id parameter')
     const { productId, quantity } = _req.body
     if (!productId || !quantity) throw new Error('Missing parameter(s)')
-    const result = await store.addToCart(productId, id, Number(quantity))
+    const result = await store.addToCart(
+      username,
+      productId,
+      id,
+      Number(quantity)
+    )
     res.send(result)
   } catch (error) {
     res.status(400).send(`Unable to add to cart : ${error}`)
@@ -99,7 +111,7 @@ const remove = async (_req: Request, res: Response) => {
 const ordersRoute = (app: express.Application) => {
   app.get('/orders', index)
   app.get('/orders/:id', verifyAuth, show)
-  app.get('/orders/:userId', showUserOrder)
+  app.get('/orders/:userId', verifyAuth, showUserOrder)
   app.post('/orders', verifyAuth, express.json(), create)
   app.post('/orders/:id/products', express.json(), verifyAuth, addToCart)
   app.put(

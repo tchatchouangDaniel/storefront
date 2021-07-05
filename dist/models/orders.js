@@ -192,7 +192,7 @@ var OrdersStore = /** @class */ (function () {
             });
         });
     };
-    OrdersStore.prototype.addToCart = function (productId, orderId, quantity) {
+    OrdersStore.prototype.addToCart = function (username, productId, orderId, quantity) {
         return __awaiter(this, void 0, void 0, function () {
             var conn, sql, result, error_7;
             return __generator(this, function (_a) {
@@ -202,8 +202,13 @@ var OrdersStore = /** @class */ (function () {
                         return [4 /*yield*/, database_1["default"].connect()];
                     case 1:
                         conn = _a.sent();
-                        sql = 'insert into order_products (quantity,order_id,product_id) values($1,$2,$3) returning *';
-                        return [4 /*yield*/, conn.query(sql, [quantity, orderId, productId])];
+                        sql = 'insert into order_products (username,quantity,order_id,product_id) values($1,$2,$3,$4) returning *';
+                        return [4 /*yield*/, conn.query(sql, [
+                                username,
+                                quantity,
+                                orderId,
+                                productId,
+                            ])];
                     case 2:
                         result = _a.sent();
                         conn.release();

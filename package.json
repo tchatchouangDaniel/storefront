@@ -5,7 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "start": "node src/server.ts",
-    "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
+    "watch": "db-migrate up && tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
     "jasmine-ts": "jasmine-ts",
     "jasmine": "jasmine --random=false",
     "tsc": "tsc",
