@@ -6,6 +6,8 @@
 - build : yarn run build
 - start the server : yarn run start
 
+server run on port : `3000`
+
 ## Connect the database
 
 Create a .env file with the following details :
@@ -44,4 +46,4 @@ So these are the steps to start adding product:
 3. create a user
 4. create an order
 
-and from there you can are good to go.
+and from there you are good to go.
