@@ -10,6 +10,8 @@ server run on port : `3000`
 
 ## Connect the database
 
+**I have included my .env file and down here is the schema of my file**
+
 Create a .env file with the following details :
 
 - POSTGRES_HOST= host
@@ -29,12 +31,10 @@ After creating that file everything should be working
 ## Test with jasmine
 
 Test are run on the test database :
+**make sure to set ENV=test before running the tests**
+run tests with : `yarn run test`
 
-run tests with : yarn run test
-
-- Only the tests for the models are included
-
-## Test endpoints
+## Test endpoints with postman
 
 I added a table for categories.
 I added the endpoints for categories in `REQUIREMENTS.md`
