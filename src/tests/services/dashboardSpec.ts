@@ -13,4 +13,3 @@ describe('Dashboard method existence', () => {
     expect(queries.productsInCart).toBeDefined()
   })
 })
-// TODO: Complete tests

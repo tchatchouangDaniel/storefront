@@ -107,7 +107,7 @@ export class UsersStore {
     const conn = await Client.connect()
     const sql = 'select * from users where username=($1)'
     const result = await conn.query(sql, [username])
-    if (result.rows.length) {
+    if (result.rows.length > 0) {
       const user = result.rows[0]
       if (bcrypt.compareSync(`${password}${pepper}`, user.password)) return user
     }

@@ -50,6 +50,9 @@ describe('user model', () => {
             expect(result[0].firstname).toEqual('daniel');
             expect(result[0].lastname).toEqual('paul');
             expect(bcrypt_1.default.compareSync(`chicken${pepper}`, result[0].password)).toBeTrue();
+            // expect(
+            //   bcrypt.compareSync(`chicken${pepper}`, result[0].password)
+            // ).toBeTrue()
         });
         it('should show user with id 1', async () => {
             const result = await store.show(1);
@@ -60,7 +63,7 @@ describe('user model', () => {
         });
         it('should display the user logged in', async () => {
             const result = await store.login('admin', 'chicken');
-            expect(result.username).toEqual('admin');
+            expect(result?.username).toEqual('admin');
             expect(bcrypt_1.default.compareSync(`chicken${pepper}`, result.password)).toBeTrue();
         });
         it('should update user with id 1 firstname to ouokam', async () => {
@@ -88,6 +91,7 @@ describe('user model', () => {
             expect(bcrypt_1.default.compareSync(`chicken${pepper}`, result.password)).toBeTrue();
         });
         it('should delete user with id 1', async () => {
+            // Aslo process id sequence reset to 1 after deletion
             const result = await store.delete(1);
             await store.resetTable();
             expect(result.firstname).toEqual('daniel');

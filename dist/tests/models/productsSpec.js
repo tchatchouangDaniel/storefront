@@ -31,12 +31,13 @@ describe('product model', () => {
     describe('products store methods functionalities', () => {
         it('should create a new product', async () => {
             await catStore.create('shoes');
-            const result = await store.create('air jordin', 'go higher with air jordin', 1);
+            const result = await store.create('air jordin', 'go higher with air jordin', 1, 10);
             expect(result).toEqual({
                 id: 1,
                 name: 'air jordin',
                 description: 'go higher with air jordin',
                 category_id: 1,
+                price: 10,
             });
         });
         it('should show all the product created', async () => {
@@ -47,6 +48,7 @@ describe('product model', () => {
                     name: 'air jordin',
                     description: 'go higher with air jordin',
                     category_id: 1,
+                    price: 10,
                 },
             ]);
         });
@@ -57,36 +59,41 @@ describe('product model', () => {
                 name: 'air jordin',
                 description: 'go higher with air jordin',
                 category_id: 1,
+                price: 10,
             });
         });
         it('should update product with id 1 description to "go higher with air jordan"', async () => {
-            const result = await store.update(1, null, 'go higher with air jordan');
+            const result = await store.update(1, null, 'go higher with air jordan', null);
             expect(result).toEqual({
                 id: 1,
                 name: 'air jordin',
                 description: 'go higher with air jordan',
                 category_id: 1,
+                price: 10,
             });
         });
         it('should update product with id 1 title to "air jordan"', async () => {
-            const result = await store.update(1, 'air jordan', null);
+            const result = await store.update(1, 'air jordan', null, null);
             expect(result).toEqual({
                 id: 1,
                 name: 'air jordan',
                 description: 'go higher with air jordan',
                 category_id: 1,
+                price: 10,
             });
         });
-        it('should update product with id 1 title to "air nike" and description to "go higher with air nike"', async () => {
-            const result = await store.update(1, 'air nike', 'go higher with air nike');
+        it('should update product with id 1 title to "air nike" and description to "go higher with air nike" and price to be 12', async () => {
+            const result = await store.update(1, 'air nike', 'go higher with air nike', 12);
             expect(result).toEqual({
                 id: 1,
                 name: 'air nike',
                 description: 'go higher with air nike',
                 category_id: 1,
+                price: 12,
             });
         });
         it('should delete product with id 1', async () => {
+            // Aslo process id sequence reset to 1 after deletion
             const result = await store.delete(1);
             await store.resetTable();
             await catStore.delete(1);
@@ -96,6 +103,7 @@ describe('product model', () => {
                 name: 'air nike',
                 description: 'go higher with air nike',
                 category_id: 1,
+                price: 12,
             });
         });
     });

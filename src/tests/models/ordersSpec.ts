@@ -107,8 +107,8 @@ describe('order model', () => {
     it('should delete order with id 1', async () => {
       // Aslo process id sequence reset to 1 after deletion
       const result = await store.delete(1)
-      await store.resetTable()
       await userStore.delete(1)
+      await store.resetTable()
       await userStore.resetTable()
       expect(result).toEqual({ id: 1, user_id: 1, status: 'complete' })
     })

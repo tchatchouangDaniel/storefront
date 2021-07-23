@@ -56,6 +56,9 @@ describe('user model', () => {
       expect(
         bcrypt.compareSync(`chicken${pepper}`, result[0].password)
       ).toBeTrue()
+      // expect(
+      //   bcrypt.compareSync(`chicken${pepper}`, result[0].password)
+      // ).toBeTrue()
     })
 
     it('should show user with id 1', async () => {
@@ -68,7 +71,7 @@ describe('user model', () => {
 
     it('should display the user logged in', async () => {
       const result = await store.login('admin', 'chicken')
-      expect(result!.username).toEqual('admin')
+      expect(result?.username).toEqual('admin')
       expect(
         bcrypt.compareSync(`chicken${pepper}`, result!.password)
       ).toBeTrue()

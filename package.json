@@ -13,7 +13,7 @@
     "db-migrate": "db-migrate",
     "lint": "eslint src/**/*.ts --fix",
     "prettier": "prettier --config .prettierrc --write ./src/**/*.ts",
-    "test": "tsc --build && db-migrate --env test up && jasmine-ts && db-migrate db:drop test && yarn run reset",
+    "test": "tsc --build && db-migrate --env test up && jasmine-ts && db-migrate db:drop test && yarn run reset-test",
     "reset-test": "db-migrate --env test reset",
     "reset-dev": "db-migrate reset"
   },

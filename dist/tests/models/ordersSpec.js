@@ -15,6 +15,9 @@ describe('order model', () => {
         it('should have a show method', () => {
             expect(store.show).toBeDefined();
         });
+        it('should have an update method', () => [
+            expect(store.showUserOrder).toBeDefined(),
+        ]);
         it('should have an update method', () => {
             expect(store.update).toBeDefined();
         });
@@ -65,6 +68,14 @@ describe('order model', () => {
                 status: 'active',
             });
         });
+        it('should show order of user with id 1', async () => {
+            const result = await store.showUserOrder(1);
+            expect(result).toEqual({
+                id: 1,
+                user_id: 1,
+                status: 'active',
+            });
+        });
         it('should update order with id 1 status to complete', async () => {
             const result = await store.update(1, 'complete');
             expect(result).toEqual({
@@ -74,9 +85,10 @@ describe('order model', () => {
             });
         });
         it('should delete order with id 1', async () => {
+            // Aslo process id sequence reset to 1 after deletion
             const result = await store.delete(1);
-            await store.resetTable();
             await userStore.delete(1);
+            await store.resetTable();
             await userStore.resetTable();
             expect(result).toEqual({ id: 1, user_id: 1, status: 'complete' });
         });

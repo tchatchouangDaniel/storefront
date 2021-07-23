@@ -35,13 +35,13 @@ export class CategoriesStore {
 
   async create(name: string): Promise<Category> {
     try {
-      const sqlId = 'Select max(id) from categories'
+      // const sqlId = 'Select max(id) from categories'
       const conn = await Client.connect()
-      const maxIdResult = await conn.query(sqlId)
-      const maxId = maxIdResult.rows[0].max
-      const newId = maxId ? maxId + 1 : 1
-      const sql = 'INSERT INTO categories (id,name) VALUES($1,$2) RETURNING *'
-      const result = await conn.query(sql, [newId, name])
+      // const maxIdResult = await conn.query(sqlId)
+      // const maxId = maxIdResult.rows[0].max
+      // const newId = maxId ? maxId + 1 : 1
+      const sql = 'INSERT INTO categories (name) VALUES($1) RETURNING *'
+      const result = await conn.query(sql, [name])
       conn.release()
       return result.rows[0]
     } catch (error) {
@@ -68,6 +68,17 @@ export class CategoriesStore {
       const result = await conn.query(sql, [id])
       conn.release()
       return result.rows[0]
+    } catch (error) {
+      throw new Error(`Unable to update : ${error}`)
+    }
+  }
+
+  async deleteAll(): Promise<void> {
+    try {
+      const conn = await Client.connect()
+      const sql = 'delete from categories'
+      await conn.query(sql)
+      conn.release()
     } catch (error) {
       throw new Error(`Unable to update : ${error}`)
     }
